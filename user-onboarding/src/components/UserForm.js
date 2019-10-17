@@ -11,20 +11,36 @@ const UserForm = ({ errors, touched, values, status }) => {
   return (
     <div className="form-container">
       <Form>
+        <label>Name</label>
         <Field type="text" name="name" placeholder="name" />
         {touched.name && errors.name && <p className="error">{errors.name}</p>}
+        <label>E-Mail</label>
         <Field type="email" name="email" placeholder="E-Mail" />
         {touched.email && errors.email && (
           <p className="error">{errors.email}</p>
         )}
+        <label>Password</label>
         <Field type="password" name="password" placeholder="Password" />
         {touched.password && errors.password && (
           <p className="error">{errors.password}</p>
         )}
-        <Field type="checkbox" name="terms" checked={values.terms} />
+        <label>Role</label>
+        <Field component="select" name="role" placeholder="role">
+          <option>Please Select an option</option>
+          <option value="Web Developer">Web Developer</option>
+          <option value="Data Scientist">Data Scientist</option>
+          <option value="Mobile Developer">Mobile Developer</option>
+        </Field>
+        {touched.role && errors.role && <p className="error">{errors.role}</p>}
+        <label>
+          Terms of Service
+          <Field type="checkbox" name="terms" checked={values.terms} />
+        </label>
+
         {touched.terms && errors.terms && (
           <p className="error">{errors.terms}</p>
         )}
+
         <button type="submit"> Submit </button>
       </Form>
       {users.map(user => (
@@ -32,6 +48,7 @@ const UserForm = ({ errors, touched, values, status }) => {
           <li>Name: {user.name}</li>
           <li>E-Mail: {user.email}</li>
           <li>Password: {user.password}</li>
+          <li>Role: {user.role}</li>
         </ul>
       ))}
     </div>
@@ -39,12 +56,13 @@ const UserForm = ({ errors, touched, values, status }) => {
 };
 
 const FormikUserForm = withFormik({
-  mapPropsToValues({ name, email, password, terms }) {
+  mapPropsToValues({ name, email, password, terms, role }) {
     return {
       terms: terms || false,
       name: name || "",
       email: email || "",
-      password: password || ""
+      password: password || "",
+      role: role || ""
     };
   },
 
@@ -52,7 +70,10 @@ const FormikUserForm = withFormik({
     name: Yup.string().required("Name is Required"),
     email: Yup.string().required("Email is Required"),
     password: Yup.string().required("Password is Required"),
-    terms: Yup.string().required("Please agree to our terms of service")
+    terms: Yup.string().required("Please agree to our terms of service"),
+    role: Yup.string()
+      .oneOf(["Web Developer", "Data Scientist", "Mobile Developer"])
+      .required("Please select a role")
   }),
 
   handleSubmit(values, { setStatus }) {

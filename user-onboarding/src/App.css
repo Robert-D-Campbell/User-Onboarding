@@ -1,22 +1,24 @@
-.App {
-  text-align: center;
+body {
+  background: black;
 }
-
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+ul {
+  list-style: none;
   color: white;
 }
-
-.App-link {
-  color: #09d3ac;
+form {
+  margin: 5% auto;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+p {
+  color: red;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+input {
+  margin: 2%;
 }
